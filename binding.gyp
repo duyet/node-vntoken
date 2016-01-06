@@ -2,7 +2,7 @@
     "targets": [
         {
             "target_name": "vntoken",
-            "sources": [ "vntoken.cc" ]
+            "sources": [ "addon.cc", "vntoken.cc" ]
         }
     ]
 }

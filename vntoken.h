@@ -3,6 +3,10 @@
 
 #include <string>
 #include <node.h>
+#include <node_object_wrap.h>
+#include <v8.h>
+
+using namespace v8;
 
 class NodeTokenWrapper 
 	: public node::ObjectWrap {
@@ -12,9 +16,11 @@ class NodeTokenWrapper
 		explicit NodeTokenWrapper(std::string s = "");
 		~NodeTokenWrapper();
 
-	static v8::Handle<v8::Value> New(const v8::Arguments& args);
-	static v8::Handle<v8::Value> add(const v8::Arguments& args);
-	static v8::Handle<v8::Value> toString(const v8::Arguments& args);
+	static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void add(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void toString(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static v8::Persistent<v8::Function> constructor;
 
 	public:
 		static void Init(v8::Handle<v8::Object> exports);
