@@ -22,7 +22,7 @@ void NodeTokenWrapper::Init(v8::Handle<v8::Object> exports) {
 
 	// Prototype
 	NODE_SET_PROTOTYPE_METHOD(tpl, "add", add);
-	// NODE_SET_PROTOTYPE_METHOD(tpl, "toString", toString);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "toString", toString);
 
 	constructor.Reset(isolate, tpl->GetFunction());
 	exports->Set(String::NewFromUtf8(isolate, "NodeToken"),
@@ -62,7 +62,7 @@ void NodeTokenWrapper::add(const v8::FunctionCallbackInfo<v8::Value>&  args) {
 	NodeTokenWrapper* obj = ObjectWrap::Unwrap<NodeTokenWrapper>(args.This());
 	obj->s_->append(s);
 
-	args.GetReturnValue().Set(obj->s_->c_str());
+	args.GetReturnValue().Set(String::NewFromUtf8(isolate, "xxxx"));
 }
 
 void NodeTokenWrapper::toString(const FunctionCallbackInfo<Value>& args) {
@@ -71,5 +71,5 @@ void NodeTokenWrapper::toString(const FunctionCallbackInfo<Value>& args) {
 
 	NodeTokenWrapper* obj = ObjectWrap::Unwrap<NodeTokenWrapper>(args.This());
 
-	args.GetReturnValue().Set(obj->s_->c_str());
+	args.GetReturnValue().Set(String::NewFromUtf8(isolate, "yyyyyyyyyyyyyyy"));
 }
