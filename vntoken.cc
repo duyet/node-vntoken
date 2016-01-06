@@ -25,7 +25,6 @@ void NodeTokenWrapper::Init(v8::Handle<v8::Object> exports) {
 	tpl->InstanceTemplate()->SetInternalFieldCount(2);
 
 	// Prototype
-	// NODE_SET_PROTOTYPE_METHOD(tpl, "add", add);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "toString", toString);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "token", token);
 
@@ -56,18 +55,6 @@ void NodeTokenWrapper::New(const FunctionCallbackInfo<Value>& args) {
 	}
 }
 
-// void NodeTokenWrapper::add(const v8::FunctionCallbackInfo<v8::Value>&  args) {
-// 	Isolate* isolate = Isolate::GetCurrent();
-// 	HandleScope scope(isolate);
-
-// 	v8::String::Utf8Value str(args[0]->ToString());
-// 	std::string s(*str);
-
-// 	NodeTokenWrapper* obj = ObjectWrap::Unwrap<NodeTokenWrapper>(args.This());
-// 	obj->s_->append(s);
-
-// 	args.GetReturnValue().Set(String::NewFromUtf8(isolate, obj->s_->c_str()));
-// }
 
 void NodeTokenWrapper::toString(const FunctionCallbackInfo<Value>& args) {
 	Isolate* isolate = Isolate::GetCurrent();
@@ -75,7 +62,7 @@ void NodeTokenWrapper::toString(const FunctionCallbackInfo<Value>& args) {
 
 	NodeTokenWrapper* obj = ObjectWrap::Unwrap<NodeTokenWrapper>(args.This());
 
-	args.GetReturnValue().Set(obj->s_.c_str());
+	args.GetReturnValue().Set(String::NewFromUtf8(isolate, obj->s_.c_str()));
 }
 
 void NodeTokenWrapper::token(const FunctionCallbackInfo<Value>& args) {
@@ -88,11 +75,13 @@ void NodeTokenWrapper::token(const FunctionCallbackInfo<Value>& args) {
 	std::Machine predictor(3, "", std::PREDICT);
 	if (!predictor.load()) {
 		printf("%s\n", "Failed to load data token model");
-		args.GetReturnValue().Set("");
+		args.GetReturnValue().Set(String::NewFromUtf8(isolate, ""));
 		return;
 	}
-	std::string* result = predictor.segment(std::string(obj->s_));
+	std::string *s = new std::string(obj->s_);
+	std::string result = predictor.segment(*s);
+	std::string *ss = new std::string(result);
 
-	args.GetReturnValue().Set(result->c_str());
+	args.GetReturnValue().Set(String::NewFromUtf8(isolate, ss->c_str()));
 }
 

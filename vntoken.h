@@ -17,7 +17,7 @@ class NodeTokenWrapper
 		~NodeTokenWrapper();
 
 	static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
-	static void add(const v8::FunctionCallbackInfo<v8::Value>& args);
+	// static void add(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void toString(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void token(const v8::FunctionCallbackInfo<v8::Value>& args);
 
