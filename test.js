@@ -1,5 +1,8 @@
-var addon = require('./build/Release/addon')
-var test = new addon.NodeToken('test')
+var addon = require('./build/Release/vntoken.node')
+var test = new addon.NodeToken('hello')
+
+console.log(addon.NodeToken)
 
 test.add('!')
-console.log("test's contents: %s", test)
+
+console.log(test.toString())

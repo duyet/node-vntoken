@@ -11,7 +11,7 @@ using namespace v8;
 class NodeTokenWrapper 
 	: public node::ObjectWrap {
 	private:
-		std::string* s_;
+		std::string s_;
 
 		explicit NodeTokenWrapper(std::string s = "");
 		~NodeTokenWrapper();
@@ -19,6 +19,7 @@ class NodeTokenWrapper
 	static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void add(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void toString(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void token(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 	static v8::Persistent<v8::Function> constructor;
 
